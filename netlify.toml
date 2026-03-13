@@ -1,0 +1,171 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/about"
+  to = "https://about.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about/*"
+  to = "https://about.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quarzite"
+  to = "https://quarzite.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quarzite/*"
+  to = "https://quarzite.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/microkeebs"
+  to = "https://microkeebs.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/microkeebs/*"
+  to = "https://microkeebs.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/anonq"
+  to = "https://anonq.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/anonq/*"
+  to = "https://anonq.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/regular-projects"
+  to = "/wip/"
+  status = 302
+
+[[redirects]]
+  from = "/big-projects"
+  to = "/wip/"
+  status = 302
+
+[[redirects]]
+  from = "/favicon.svg"
+  to = "https://dialoguegen.vercel.app/favicon.svg"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dialogue/favicon.svg"
+  to = "https://dialoguegen.vercel.app/favicon.svg"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dialogue"
+  to = "https://dialoguegen.vercel.app/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dialogue/"
+  to = "https://dialoguegen.vercel.app/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dialogue/*"
+  to = "https://dialoguegen.vercel.app/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/youtube"
+  to = "https://www.youtube.com/@Microck"
+  status = 302
+
+[[redirects]]
+  from = "/twitter"
+  to = "https://x.com/JustMicrock"
+  status = 302
+
+[[redirects]]
+  from = "/github"
+  to = "https://github.com/Microck"
+  status = 302
+
+[[redirects]]
+  from = "/anime"
+  to = "https://anilist.co/user/Microck/"
+  status = 302
+
+[[redirects]]
+  from = "/films"
+  to = "https://letterboxd.com/microck_/"
+  status = 302
+
+[[redirects]]
+  from = "/books"
+  to = "https://www.goodreads.com/user/show/169975249-microck"
+  status = 302
+
+[[redirects]]
+  from = "/games"
+  to = "https://backloggd.com/u/Microck/"
+  status = 302
+
+[[redirects]]
+  from = "/music"
+  to = "https://stats.fm/xmicrock"
+  status = 302
+
+[[redirects]]
+  from = "/minecraft"
+  to = "https://namemc.com/profile/xMicrock.1"
+  status = 302
+
+[[redirects]]
+  from = "/osu"
+  to = "https://osu.ppy.sh/users/13935109"
+  status = 302
+
+[[redirects]]
+  from = "/vlr"
+  to = "https://tracker.gg/valorant/profile/riot/Secret%23666/performance?platform=pc&playlist=competitive"
+  status = 302
+
+[[redirects]]
+  from = "/socr/youtube"
+  to = "https://www.youtube.com/@socr.marcos"
+  status = 302
+
+[[redirects]]
+  from = "/socr/instagram"
+  to = "https://www.instagram.com/http.socr"
+  status = 302
+
+[[redirects]]
+  from = "https://tile.micr.dev/*"
+  to = "https://quarzite.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.youtube.com https://s.ytimg.com https://sleepie.uk; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: https:; connect-src 'self' https: blob:; frame-src 'self' https://www.youtube.com https://open.spotify.com https://dialoguegen.vercel.app; object-src 'none';"
