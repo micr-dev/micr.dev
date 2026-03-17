@@ -20,13 +20,14 @@
 
       body {
         margin: 0;
-        height: 100vh;
+        min-height: 100vh;
         background: radial-gradient(
           ellipse at bottom,
           #1b2735 0%,
           #090a0f 100%
         );
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -44,7 +45,7 @@
       #stars,
       #stars2,
       #stars3 {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -119,18 +120,18 @@
       /* SPHERES */
       .container {
         display: grid;
-        grid-template-columns: repeat(4, 150px);
-        gap: 2rem;
+        grid-template-columns: repeat(5, 140px);
+        gap: 1.25rem;
         position: relative;
         z-index: 10;
         justify-content: center;
         padding: 2rem;
-        max-width: 800px;
+        max-width: 780px;
       }
 
       .sphere {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
         cursor: pointer;
         position: relative;
         opacity: 0;
@@ -154,19 +155,18 @@
         opacity: 1;
       }
 
-      .sphere:nth-child(1) { animation-delay: 0.05s; }
-      .sphere:nth-child(2) { animation-delay: 0.1s; }
-      .sphere:nth-child(3) { animation-delay: 0.15s; }
-      .sphere:nth-child(4) { animation-delay: 0.2s; }
-      .sphere:nth-child(5) { animation-delay: 0.25s; }
-      .sphere:nth-child(6) { animation-delay: 0.3s; }
-      .sphere:nth-child(7) { animation-delay: 0.35s; }
-      .sphere:nth-child(8) { animation-delay: 0.4s; }
-      .sphere:nth-child(9) { animation-delay: 0.45s; }
-      .sphere:nth-child(10) { animation-delay: 0.5s; }
-      .sphere:nth-child(11) { animation-delay: 0.55s; }
-      .sphere:nth-child(12) { animation-delay: 0.6s; }
-      .sphere:nth-child(13) { animation-delay: 0.65s; }
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: repeat(4, 130px);
+          gap: 1rem;
+          max-width: 568px;
+        }
+
+        .sphere {
+          width: 130px;
+          height: 130px;
+        }
+      }
 
       /* Dim other spheres when one is active */
       .container.has-active .sphere:not(.active) {
@@ -269,21 +269,35 @@
       }
 
       @media (max-width: 600px) {
+        body {
+          justify-content: flex-start;
+          align-items: stretch;
+          overflow-y: auto;
+          padding: 5.5rem 0 6rem;
+        }
+
         .container {
           grid-template-columns: repeat(2, 40vw);
           gap: 1rem;
           padding: 1rem;
+          width: min(92vw, 320px);
+          margin: 0 auto;
         }
 
         .sphere {
           width: 40vw;
           height: 40vw;
-          max-width: 150px;
-          max-height: 150px;
+          max-width: 140px;
+          max-height: 140px;
         }
 
         .tooltip {
           display: none; /* hide floating tooltips on mobile */
+        }
+
+        #mobile-desc {
+          bottom: 1rem;
+          width: min(88vw, 320px);
         }
 
         /* Denser stars on mobile */
@@ -434,6 +448,11 @@ const spheres = [
           desc: "A place to learn a bit more of me.",
         },
         {
+          img: "images/micrdevblog.gif",
+          url: "https://blog.micr.dev/",
+          desc: "Writeups, notes, and experiments.",
+        },
+        {
           img: "images/micrdevkeebs.gif",
           url: "https://microkeebs.micr.dev/",
           desc: "A website to showcase keyboards that I have built.",
@@ -449,9 +468,9 @@ const spheres = [
           desc: "Ask me anything anonymously. No logs, no names.",
         },
         {
-          img: "images/micrdevja3.gif",
-          url: "https://microck.github.io/ja3-bypass-gateway/",
-          desc: "A writeup on defeating JA3 fingerprinting with a stealth gateway.",
+          img: "images/micrdevkagi.gif",
+          url: "https://kagi.micr.dev/",
+          desc: "A complete guide to the kagi CLI for search, automation, and structured terminal workflows.",
         },
         {
           img: "images/micrdevclaude.gif",
@@ -475,8 +494,13 @@ const spheres = [
         },
         {
           img: "images/dialogue.gif",
-          url: "https://micr.dev/dialogue",
+          url: "https://dialogue.micr.dev/",
           desc: "Generate RPG-style dialogue videos with typing animation.",
+        },
+        {
+          img: "images/micrdevtuneport.gif",
+          url: "https://tuneport.micr.dev/",
+          desc: "Sync YouTube to Spotify with zero friction. Match tracks, add to playlists, and download audio locally.",
         },
         {
           img: "images/kefinestore.gif",
@@ -487,6 +511,31 @@ const spheres = [
           img: "images/opencode.gif",
           url: "https://opencode-studio.micr.dev/",
           desc: "A local GUI for managing OpenCode configurations, skills, and MCP servers without JSON editing.",
+        },
+        {
+          img: "images/micrdevtuireel.gif",
+          url: "https://tuireel.micr.dev/",
+          desc: "Produce polished terminal demo videos from declarative configs.",
+        },
+        {
+          img: "images/micrdevsincronizado.gif",
+          url: "https://sincronizado.micr.dev/",
+          desc: "Keep files local. Run remote.",
+        },
+        {
+          img: "images/micrdevtokens.gif",
+          url: "https://tokens.micr.dev/",
+          desc: "Merged daily coding-agent usage heatmap.",
+        },
+        {
+          img: "images/micrdevglob.gif",
+          url: "https://glob.micr.dev/",
+          desc: "Compress GLB and GLTF 3D models online for free.",
+        },
+        {
+          img: "images/micrdevundyingterminal.gif",
+          url: "https://undyingterminal.com/",
+          desc: "A reconnectable Windows terminal that survives disconnects, sleep, and network changes.",
         },
       ];
 
@@ -499,6 +548,7 @@ const spheres = [
       spheres.forEach((sphere, index) => {
         const div = document.createElement("div");
         div.className = "sphere";
+        div.style.animationDelay = `${0.05 + index * 0.05}s`;
         div.innerHTML = `
           <img src="${sphere.img}" alt="${sphere.desc}" />
           <div class="tooltip">${sphere.desc}<span class="url">${sphere.url}</span></div>
