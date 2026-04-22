@@ -1,6 +1,20 @@
 // ==========================================================
 // ZIP‑BASED ASCII ANIMATION LOADER (fflate)
 // ==========================================================
+/**
+ * @fileoverview ASCII animation player for micr.dev.
+ * Loads a ZIP archive of pre-rendered text frames and plays them
+ * back in the browser console at a configurable FPS, optionally
+ * synchronised with an audio track.
+ *
+ * The ZIP is fetched once and kept in memory (`FRAME_MAP`).  On
+ * tab blur the animation pauses; on focus it clears the intro.
+ * Type `makeLove()` in the console to start the Bad Apple!!
+ * ASCII playback with audio.
+ *
+ * @module run
+ * @requires fflate (ESM, loaded from CDN)
+ */
 
 import {
   unzipSync,
@@ -15,7 +29,11 @@ const indent = "        ";
 let FRAME_MAP = null;
 let zipReady = false;
 
-// ---- Load ZIP once ----
+/**
+ * Fetch and decompress the frames ZIP from the server.
+ * Idempotent — subsequent calls return immediately.
+ * @returns {Promise<void>}
+ */
 async function loadZip() {
   if (zipReady) return;
 
@@ -32,7 +50,12 @@ async function loadZip() {
   );
 }
 
-// ---- Get frame text ----
+/**
+ * Retrieve the raw text content of a single frame by index.
+ * Loads the ZIP lazily on the first call.
+ * @param {number} idx - Zero-padded frame index (1–6572).
+ * @returns {Promise<string|null>} Frame text or `null` if not found.
+ */
 async function getFrame(idx) {
   if (!zipReady) await loadZip();
 
@@ -43,7 +66,11 @@ async function getFrame(idx) {
   return strFromU8(entry);
 }
 
-// Dummy (ZIP removes need for network preloading)
+/**
+ * No-op preload stub — the ZIP approach requires no separate
+ * network requests per frame.  Kept for API compatibility.
+ * @returns {Promise<void>}
+ */
 async function preloadFrames() { return; }
 
 // ==========================================================
@@ -54,6 +81,7 @@ let frameIndex = 1;
 let interval = null;
 let stopFlag = false;
 
+/** Pause animation and restart intro when the tab loses focus. */
 window.addEventListener("blur", () => {
   if (!interval) return;
 
@@ -72,11 +100,12 @@ window.addEventListener("blur", () => {
   }, 200);
 });
 
-// ★ UPDATED — nothing restarts automatically on focus
+/** Log a message when the tab regains focus — animation stays paused. */
 window.addEventListener("focus", () => {
   console.log("(animation paused — tab re-focused)");
 });
 
+/** Advance the animation one line on each call. */
 function softClear() {
   console.log("\n");
 }
@@ -85,6 +114,13 @@ function softClear() {
 // PLAYBACK
 // ==========================================================
 
+/**
+ * Begin ASCII frame playback in the browser console.
+ * Schedules `getFrame` lookups at `1000/fps` ms intervals and
+ * writes each frame to `console.log`.  When all frames are
+ * exhausted a credits line is printed after a 1 s delay.
+ * @returns {Promise<void>}
+ */
 async function playAscii() {
   if (interval) return;
   stopFlag = false;
@@ -112,7 +148,7 @@ async function playAscii() {
 
     const frame = await getFrame(frameIndex);
     if (frame) {
-      // ★ UPDATED — delay audio by 0.5s after frame 1
+      // Delay audio by 0.5 s after frame 1
       if (firstFrame) {
         firstFrame = false;
         requestAnimationFrame(() => {
@@ -134,29 +170,38 @@ async function playAscii() {
 // INTRO + PUBLIC API
 // ==========================================================
 
+/**
+ * Print the ASCII art intro banner to the console.
+ */
 function intro() {
   console.log(
     "\n" +
       `
 _____________________________________________________________________/\\\\\\_______________________________        
- ____________________________________________________________________\\/\\\\\\_______________________________       
-  ______________________/\\\\\\__________________________________________\\/\\\\\\_______________________________      
-   ____/\\\\\\\\\\__/\\\\\\\\\\___\\///______/\\\\\\\\\\\\\\\\__/\\\\/\\\\\\\\\\\\\\_______________\\/\\\\\\______/\\\\\\\\\\\\\\\\___/\\\\\\____/\\\\\\_     
-    __/\\\\\\///\\\\\\\\\\///\\\\\\__/\\\\\\___/\\\\\\//////__\\/\\\\\\/////\\\\\\_________/\\\\\\\\\\\\\\\\\\____/\\\\\\/////\\\\\\_\\//\\\\\\__/\\\\\\__    
-     _\\/\\\\\\_\\//\\\\\\__\\/\\\\\\_\\/\\\\\\__/\\\\\\_________\\/\\\\\\___\\///_________/\\\\\\////\\\\\\___/\\\\\\\\\\\\\\\\\\\\\\___\\//\\\\\\/\\\\\\___   
-      _\\/\\\\\\__\\/\\\\\\__\\/\\\\\\_\\/\\\\\\_\\//\\\\\\________\\/\\\\\\_______________\\/\\\\\\__\\/\\\\\\__\\//\\\\///////_____\\//\\\\\\\\\\____  
-       _\\/\\\\\\__\\/\\\\\\__\\/\\\\\\_\\/\\\\\\__\\///\\\\\\\\\\\\\\\\_\\/\\\\\\__________/\\\\\\_\\//\\\\\\\\\\\\\\/\\\\__\\//\\\\\\\\\\\\\\\\\\\\____\\//\\\\\\_____ 
-        _\\///___\\///___\\///__\\///_____\\////////__\\///__________\\///___\\///////\\//____\\//////////______\\///______
+ ____________________________________________________________________\\/\\___/\\\\\\_______________________________       
+  ______________________/\\___/\\\\\\__________________________________________\\/\\___\\/\\______________/\\\\\\_______________________      
+   ____/\\\\\\_________/\\\\\\____/\\\\\\___\\////______/\\\\\\_________\\/\\\\\\____/\\\\\\____/\\\\\\_______________\\/\\______      
+    __/\\\\\\///\\\\\\____/\\\\\\///\\\\\\___/\\\\\\_________\\/\\\\\\___/\\\\\\_________\\/\\\\\\______/\\\\\\///___________\\/\\_______     
+     _\\/\\\\\\__\\///\\\\\\__\\/\\\\\\__\\//\\\\\\___\\/\\\\\\_________\\/\\\\\\__/\\\\\\_________\\/\\\\\\______\\////____________\\/\\______    
+      _\\/\\\\\\____\\/\\\\\\__\\/\\\\\\____\\/\\\\\\__\\/\\\\\\_________\\/\\\\\\_\\/\\\\\\_________\\/\\\\\\___________________________\\/\\______   
+       _\\/\\\\\\____\\/\\\\\\__\\/\\\\\\____\\/\\\\\\__\\/\\\\\\_________\\/\\\\\\__\\/\\\\\\_________\\/\\\\\\__________________________\\/\\______  
+        _\\/\\\\\\____\\/\\\\\\__\\/\\\\\\____\\/\\\\\\__\\/\\\\\\_________\\/\\\\\\___\\/\\\\\\_________\\/\\\\\\__________________________\\/\\______ 
+         _\\/\\\\\\____\\/\\\\\\__\\/\\\\\\____\\/\\\\\\__\\/\\\\\\_________\\/\\\\\\____\\/\\\\\\_________\\/\\\\\\__________________________\\/\\______
+          _\\/\\//\\____\\///___\\///_____\\///___\\/\\//_________\\///_____\\///__________\\///__________________________\\///_______
 
         whether you are a curious explorer or a developer tinkering with my website,
         you've found this easter egg! your efforts won't go to waste.
         type "makeLove()" and press enter :)
-		
-												       and don't forget to ★ the repo: github.com/Microck/micr.dev
+
+                                         and don't forget to ★ the repo: github.com/Microck/micr.dev
 `
   );
 }
 
+/**
+ * Trigger the Bad Apple!! ASCII animation with audio.
+ * Exposed as `window.makeLove` for console access.
+ */
 function makeLove() {
   console.log("\nnot war?");
   setTimeout(() => {
@@ -175,6 +220,10 @@ const eggAudio = new Audio("./assets/run.ogg");
 eggAudio.preload = "auto";
 eggAudio.volume = 0.25;
 
+/**
+ * Play the ``run.ogg`` audio track from the start.
+ * Exposed as `window.playEggAudio`.
+ */
 window.playEggAudio = function () {
   eggAudio.currentTime = 0;
   eggAudio.play();
