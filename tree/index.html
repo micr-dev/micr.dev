@@ -32,8 +32,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        transform: scale(0.8);
-        transform-origin: center center;
         font-family: sans-serif;
         -ms-overflow-style: none;
         scrollbar-width: none;
@@ -323,6 +321,21 @@
             500px 700px #fff, 1200px 1600px #fff, 1400px 1400px #fff;
         }
       }
+      /* Scene wrapper (scaled) */
+      .scene {
+        transform: scale(0.8);
+        transform-origin: center center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
       /* Welcome modal */
       #welcome-modal {
         position: fixed;
@@ -418,6 +431,8 @@
         </div>
       </div>
     </div>
+    <!-- SCENE (scaled) -->
+    <div class="scene">
     <!-- STAR LAYERS -->
     <div id="stars"></div>
     <div id="stars2"></div>
@@ -428,6 +443,7 @@
 
     <!-- MOBILE DESCRIPTION BOX -->
     <div id="mobile-desc"></div>
+    </div>
 
     <!-- BACKGROUND MUSIC -->
     <audio
