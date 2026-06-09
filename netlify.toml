@@ -2,6 +2,54 @@
   publish = "."
 
 [[redirects]]
+  from = "https://tree.micr.dev/"
+  to = "/tree/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://tree.micr.dev/*"
+  to = "/tree/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://wip.micr.dev/"
+  to = "/wip/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://wip.micr.dev/*"
+  to = "/wip/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/tree"
+  to = "https://tree.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tree/*"
+  to = "https://tree.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wip"
+  to = "https://wip.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wip/*"
+  to = "https://wip.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/about"
   to = "https://about.micr.dev/"
   status = 301
@@ -51,13 +99,15 @@
 
 [[redirects]]
   from = "/regular-projects"
-  to = "/wip/"
-  status = 302
+  to = "https://wip.micr.dev/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/big-projects"
-  to = "/wip/"
-  status = 302
+  to = "https://wip.micr.dev/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/favicon.svg"
@@ -157,6 +207,30 @@
 [[redirects]]
   from = "https://tile.micr.dev/*"
   to = "https://quarzite.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://micr.dev/"
+  to = "https://room.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://micr.dev/*"
+  to = "https://room.micr.dev/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.micr.dev/"
+  to = "https://room.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.micr.dev/*"
+  to = "https://room.micr.dev/:splat"
   status = 301
   force = true
 
