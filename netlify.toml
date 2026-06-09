@@ -32,6 +32,12 @@
   force = true
 
 [[redirects]]
+  from = "/tree/index.html"
+  to = "https://tree.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/tree/*"
   to = "https://tree.micr.dev/:splat"
   status = 301
@@ -39,6 +45,12 @@
 
 [[redirects]]
   from = "/wip"
+  to = "https://wip.micr.dev/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wip/index.html"
   to = "https://wip.micr.dev/"
   status = 301
   force = true
