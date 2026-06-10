@@ -266,10 +266,10 @@
     <div id="loader">
       <div id="loading-message"></div>
       <div id="spinner-container">
-        <div class="dialog-box">
+        <div class="dialog-box" data-highlight-host>
           <div class="content">
             <p>
-              The scene is currently loading. Loading times may vary depending on
+              <span data-highlight>The scene is currently loading.</span> Loading times may vary depending on
               your internet speed.
             </p>
             <p>
@@ -289,13 +289,13 @@
 
     <!-- Confirmation popup before GPU upload -->
     <div id="confirm-popup">
-      <div class="confirm-box">
-        <h2>Ready to render</h2>
+      <div class="confirm-box" data-highlight-host>
+        <h2 data-highlight>Ready to render</h2>
         <p>
           Loading the 3D scene will cause a brief lag spike while assets
           upload to GPU. This is expected behavior.
         </p>
-        <a href="https://tree.micr.dev/" class="alt-link">Want something faster? → View projects index</a>
+        <a href="https://tree.micr.dev/" class="alt-link">Want something faster? -> <span data-highlight>View projects index</span></a>
         <div class="confirm-buttons">
           <button id="confirm-back" class="confirm-btn secondary">Go back</button>
           <button id="confirm-proceed" class="confirm-btn primary">Proceed</button>
@@ -563,6 +563,38 @@
           };
         }
       }, 1000);
+    </script>
+    <script type="module">
+      import { highlight } from "https://cdn.jsdelivr.net/npm/@highlighters/core@1.1.1/+esm";
+
+      const options = {
+        color: "#6f6f6f",
+        opacity: 0.28,
+        snap: "word",
+        blendMode: "multiply",
+        ink: {
+          flow: 0.34,
+          feathering: 0.14,
+          streakiness: 0.16,
+          dryout: 0.08,
+        },
+        edge: {
+          waviness: 0.65,
+          roughness: 0.1,
+          cap: "round",
+        },
+        animation: {
+          duration: 480,
+          stagger: 60,
+        },
+      };
+
+      window.addEventListener("load", () => {
+        document.querySelectorAll("[data-highlight]").forEach((target) => {
+          const host = target.closest("[data-highlight-host]");
+          highlight(target, options, host instanceof HTMLElement ? host : null);
+        });
+      });
     </script>
   </body>
 </html>
